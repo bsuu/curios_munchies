@@ -1,0 +1,9 @@
+{
+  "type": "curios_munchies:curios_munchies_recipe",
+  "base" : {
+    "tag": "curios_munchies:curios_munchies_snack"
+  },
+  "addition": {
+    "item": "minecraft:nether_star"
+  }
+}
