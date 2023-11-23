@@ -38,14 +38,13 @@ import top.theillusivec4.curios.api.SlotAttribute;
 import top.theillusivec4.curios.api.type.ISlotType;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class SnackItem extends Item implements INBTSerializable<CompoundTag> {
 
     private ISlotType slot;
+
+    public static final String SNACK_NBT_ID = "snack_slot";
 
     private static final FoodProperties properties = new FoodProperties.Builder()
             .nutrition(1)
@@ -72,7 +71,7 @@ public class SnackItem extends Item implements INBTSerializable<CompoundTag> {
             }
 
             assert itemStack.getTag() != null;
-            String slotTag = itemStack.getTag().getString("snack_slot");
+            String slotTag = itemStack.getTag().getString(SNACK_NBT_ID);
             CuriosApi
                     .getSlotHelper()
                     .growSlotType(slotTag, 1, player);
@@ -100,43 +99,48 @@ public class SnackItem extends Item implements INBTSerializable<CompoundTag> {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        Component tooltip1 = Component.translatable("item.curios_munchies.snack_item.tooltip1").withStyle(ChatFormatting.GOLD);
-        components.add(tooltip1);
+        Component baseTooltip = Component
+                .translatable("item.curios_munchies.snack_item.unlock")
+                .withStyle(ChatFormatting.GOLD);
+        components.add(baseTooltip);
 
-        if (itemStack.getTag() != null && itemStack.getTag().contains("snack_slot")) {
-            Optional<ISlotType> slots = CuriosApi.getSlot(itemStack.getTag().getString("snack_slot"));
-            if (slots.isPresent()) {
-                ISlotType slotType = CuriosApi.getSlot(itemStack.getTag().getString("snack_slot")).get();
-                Component tooltip2 = Component.translatable("item.curios_munchies.snack_item.tooltip2")
-                        .withStyle(ChatFormatting.GOLD)
-                        .append(Component.literal(StringUtils.capitalize(slotType.getIdentifier()))
-                                .withStyle(ChatFormatting.YELLOW));
-                components.add(tooltip2);
-            }
+        CompoundTag nbt = itemStack.getTag();
+        List<Component> additionalTooltip = new ArrayList<>();
+
+        MutableComponent tooltipComponent = Component
+                .translatable("curios.tooltip.slot")
+                .append(" ")
+                .withStyle(ChatFormatting.GOLD);
+
+        MutableComponent sloTypeComponent = null;
+        if (nbt != null && nbt.contains(SNACK_NBT_ID)) {
+            String slotId = nbt.getString(SNACK_NBT_ID);
+            sloTypeComponent = Component
+                    .translatable("curios.identifier." + slotId)
+                    .withStyle(ChatFormatting.YELLOW);
         } else {
-            Component tooltip2 = Component.translatable("item.curios_munchies.snack_item.tooltip2")
-                    .withStyle(ChatFormatting.GOLD)
-                    .append(Component.literal(StringUtils.capitalize("POLSKAGUROM"))
-                            .withStyle(ChatFormatting.YELLOW)
-                            .withStyle(ChatFormatting.OBFUSCATED));
-            components.add(tooltip2);
+            sloTypeComponent = Component
+                    .literal("POLSKAGUROM")
+                    .withStyle(ChatFormatting.YELLOW)
+                    .withStyle(ChatFormatting.OBFUSCATED);
         }
 
-        if (level instanceof ClientLevel) {
-            if (!isHoldingShift()) {
-                Component tooltip = Component.translatable("item.curios_munchies.snack_item.tooltip3").withStyle(ChatFormatting.DARK_GRAY);
-                components.add(tooltip);
-            } else {
-                Component tooltip = Component.translatable("item.curios_munchies.snack_item.tooltip4");
-                components.add(tooltip);
-            }
-        }
+        tooltipComponent.append(sloTypeComponent);
+        additionalTooltip.add(tooltipComponent);
+        components.addAll(additionalTooltip);
+
+        Component infoTooltip = Component.translatable(
+                        isHoldingShift() ?
+                                "item.curios_munchies.snack_item.info" : "item.curios_munchies.snack_item.shift")
+                .withStyle(ChatFormatting.DARK_GRAY);
+
+        components.add(infoTooltip);
     }
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
-        tag.putString("snack_slot", this.slot.getIdentifier());
+        tag.putString(SNACK_NBT_ID, this.slot.getIdentifier());
         return tag;
     }
 
@@ -147,8 +151,8 @@ public class SnackItem extends Item implements INBTSerializable<CompoundTag> {
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        if (nbt.contains("snack_slot")) {
-            this.slot = CuriosApi.getSlot(nbt.getString("snack_slot")).orElse(null);
+        if (nbt.contains(SNACK_NBT_ID)) {
+            this.slot = CuriosApi.getSlot(nbt.getString(SNACK_NBT_ID)).orElse(null);
         }
     }
 }

@@ -1,5 +1,5 @@
 {
-  "type": "curios_munchies:curios_munchies_recipe",
+  "type": "curios_munchies:snack_recipe",
   "base" : {
     "tag": "curios_munchies:curios_munchies_snack"
   },

@@ -1,7 +1,6 @@
 {
   "item.curios_munchies.snack_item": "Snack",
-  "item.curios_munchies.snack_item.tooltip1": "Unlocks a new Curios slot upon consumption.",
-  "item.curios_munchies.snack_item.tooltip2": "Slot: ",
-  "item.curios_munchies.snack_item.tooltip3": "Press Shift to see more info.",
-  "item.curios_munchies.snack_item.tooltip4": "Craft a snack by combining a trinket and a %1$s in a Smithing Table."
+  "item.curios_munchies.snack_item.unlock": "Unlocks a new Curios slot upon consumption.",
+  "item.curios_munchies.snack_item.shift": "Press Shift to see more info.",
+  "item.curios_munchies.snack_item.info": "Craft a snack by combining a trinket with catalyst in a Smithing Table."
 }

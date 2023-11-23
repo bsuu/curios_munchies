@@ -34,9 +34,14 @@ public class SnackRecipe implements SmithingRecipe {
         this.addition = addition;
     }
 
-        @Override
+    @Override
     public boolean matches(Container container, Level level) {
         return this.base.test(container.getItem(1)) && this.addition.test(container.getItem(2));
+    }
+
+    @Override
+    public RecipeType<?> getType() {
+        return Type.INSTANCE;
     }
 
     @Override
@@ -68,6 +73,11 @@ public class SnackRecipe implements SmithingRecipe {
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
         return SERIALIZER;
+    }
+
+    public static class Type implements RecipeType<SnackRecipe> {
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "snack_recipe";
     }
 
     public static class SnackRecipeSerializer implements RecipeSerializer<SnackRecipe> {
