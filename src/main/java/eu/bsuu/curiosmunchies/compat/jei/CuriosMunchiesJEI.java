@@ -8,7 +8,6 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
@@ -16,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.annotation.Annotation;
 import java.util.List;
 
 @JeiPlugin
@@ -42,7 +40,10 @@ public class CuriosMunchiesJEI implements IModPlugin {
     }
 
     @Override
-    public void registerRecipes(IRecipeRegistration registration) {
+    public void registerRecipes(@NotNull IRecipeRegistration registration) {
+        if (Minecraft.getInstance().level == null) {
+            return;
+        }
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
 
         List<SnackRecipe> snackRecipeList = recipeManager.getAllRecipesFor(SnackRecipe.Type.INSTANCE);

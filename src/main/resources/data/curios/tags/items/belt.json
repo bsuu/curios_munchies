@@ -1,5 +1,4 @@
 {
-  "values": [
-    "curios_munchies:debug_item"
-  ]
+  "replace": false,
+  "values": []
 }

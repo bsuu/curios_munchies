@@ -2,9 +2,7 @@ package eu.bsuu.curiosmunchies.init;
 
 import eu.bsuu.curiosmunchies.CuriosMunchies;
 import eu.bsuu.curiosmunchies.recipe.SnackRecipe;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;

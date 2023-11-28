@@ -1,6 +1,5 @@
 package eu.bsuu.curiosmunchies.compat.jei;
 
-import eu.bsuu.curiosmunchies.CuriosMunchies;
 import eu.bsuu.curiosmunchies.recipe.SnackRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -14,11 +13,11 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.Services;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 
 public class SnackRecipeCategory implements IRecipeCategory<SnackRecipe> {
 
@@ -32,27 +31,31 @@ public class SnackRecipeCategory implements IRecipeCategory<SnackRecipe> {
     }
 
     @Override
+    @NotNull
     public RecipeType<SnackRecipe> getRecipeType() {
         return CuriosMunchiesJEI.SNACK_RECIPE_TYPE;
     }
 
     @Override
+    @NotNull
     public Component getTitle() {
         return Blocks.SMITHING_TABLE.getName();
     }
 
     @Override
+    @NotNull
     public IDrawable getBackground() {
         return this.background;
     }
 
     @Override
+    @NotNull
     public IDrawable getIcon() {
         return this.icon;
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, SnackRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, SnackRecipe recipe, @NotNull IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1)
                 .addIngredients(Ingredient.of(ItemStack.EMPTY));
 

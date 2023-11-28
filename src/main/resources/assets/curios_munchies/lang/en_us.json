@@ -1,5 +1,6 @@
 {
   "item.curios_munchies.snack_item": "Snack",
+  "item.curios_munchies.snack_item.max_slots": "You have reached the maximum amount of Curios in that slot.",
   "item.curios_munchies.snack_item.unlock": "Unlocks a new Curios slot upon consumption.",
   "item.curios_munchies.snack_item.shift": "Press Shift to see more info.",
   "item.curios_munchies.snack_item.info": "Craft a snack by combining a trinket with catalyst in a Smithing Table."
