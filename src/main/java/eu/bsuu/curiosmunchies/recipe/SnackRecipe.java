@@ -1,7 +1,12 @@
 package eu.bsuu.curiosmunchies.recipe;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import eu.bsuu.curiosmunchies.Config;
+import eu.bsuu.curiosmunchies.CuriosMunchies;
 import eu.bsuu.curiosmunchies.init.ModItems;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +16,9 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.crafting.conditions.ConditionCodec;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.ISlotType;
 
@@ -21,12 +28,10 @@ public class SnackRecipe implements SmithingRecipe {
 
     public static RecipeSerializer<SnackRecipe> SERIALIZER;
 
-    private final ResourceLocation id;
     public final Ingredient addition;
     public final Ingredient base;
 
-    public SnackRecipe(ResourceLocation id, Ingredient base, Ingredient addition) {
-        this.id = id;
+    public SnackRecipe(Ingredient base, Ingredient addition) {
         this.base = base;
         this.addition = addition;
     }
@@ -67,7 +72,6 @@ public class SnackRecipe implements SmithingRecipe {
     public boolean isAdditionIngredient(@NotNull ItemStack addition) {
         return this.addition.test(addition);
     }
-    public @NotNull ResourceLocation getId() { return this.id; }
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
@@ -78,23 +82,30 @@ public class SnackRecipe implements SmithingRecipe {
     public static class SnackRecipeSerializer implements RecipeSerializer<SnackRecipe> {
         private final SnackRecipeSerializer.Factory<SnackRecipe> constructor;
 
-        public SnackRecipeSerializer(SnackRecipeSerializer.Factory<SnackRecipe> recipeFactory) {
+        private static final Codec<SnackRecipe> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
+                Ingredient.CODEC.fieldOf("base").forGetter((recipe) -> recipe.base),
+                Ingredient.CODEC.fieldOf("addition").forGetter((recipe) -> recipe.addition)
+        ).apply(instance, SnackRecipe::new));
+
+        public SnackRecipeSerializer(Factory<SnackRecipe> recipeFactory) {
             this.constructor = recipeFactory;
         }
 
+        @Override
         @NotNull
-        public SnackRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject object) {
-            Ingredient base = Ingredient.fromJson(GsonHelper.getNonNull(object, "base"));
-            Ingredient addition = Ingredient.fromJson(GsonHelper.getNonNull(object, "addition"));
-            return this.constructor.create(id, base, addition);
+        public Codec<SnackRecipe> codec() {
+            return CODEC;
         }
 
-        public SnackRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf friendlyByteBuf) {
+        @Override
+        @Nullable
+        public SnackRecipe fromNetwork(@NotNull FriendlyByteBuf friendlyByteBuf) {
             Ingredient base = Ingredient.fromNetwork(friendlyByteBuf);
             Ingredient addition = Ingredient.fromNetwork(friendlyByteBuf);
-            return this.constructor.create(id, base, addition);
+            return this.constructor.create(base, addition);
         }
 
+        @Override
         public void toNetwork(@NotNull FriendlyByteBuf friendlyByteBuf, SnackRecipe recipe) {
             recipe.base.toNetwork(friendlyByteBuf);
             recipe.addition.toNetwork(friendlyByteBuf);
@@ -102,7 +113,7 @@ public class SnackRecipe implements SmithingRecipe {
 
         @FunctionalInterface
         public interface Factory<T extends SnackRecipe> {
-            T create(ResourceLocation p_250892_, Ingredient base, Ingredient addition);
+            T create(Ingredient base, Ingredient addition);
         }
     }
 }
