@@ -39,7 +39,7 @@ public class SnackRecipe implements SmithingRecipe {
     @Override
     @NotNull
     public RecipeType<?> getType() {
-        return Type.INSTANCE;
+        return RecipeType.SMITHING;
     }
 
     @Override
@@ -73,11 +73,7 @@ public class SnackRecipe implements SmithingRecipe {
     public @NotNull RecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }
-
-    public static class Type implements RecipeType<SnackRecipe> {
-        public static final Type INSTANCE = new Type();
-        public static final String ID = "snack_recipe";
-    }
+    
 
     public static class SnackRecipeSerializer implements RecipeSerializer<SnackRecipe> {
         private final SnackRecipeSerializer.Factory<SnackRecipe> constructor;
