@@ -12,6 +12,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,8 +47,7 @@ public class CuriosMunchiesJEI implements IModPlugin {
         }
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
 
-        List<SnackRecipe> snackRecipeList = recipeManager.getAllRecipesFor(SnackRecipe.Type.INSTANCE);
-        CuriosMunchies.LOGGER.info("Tyle jest recipes: " + snackRecipeList.size());
+        List<SnackRecipe> snackRecipeList = recipeManager.getAllRecipesFor(SnackRecipe.Type.INSTANCE).stream().map(RecipeHolder::value).toList();
         registration.addRecipes(SNACK_RECIPE_TYPE, snackRecipeList);
     }
 }
