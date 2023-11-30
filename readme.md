@@ -17,8 +17,8 @@ Indulge your in-game cravings with the Curios Munchies Mod! This unique mod tran
 
 | Dependencie | Required | Link |
 | ------ | ------ | ------ |
-| Curios API (Forge) | ✅ | [https://www.curseforge.com/minecraft/mc-mods/curios][PlDb]
-| Just Enough Items (JEI) |❌ | [https://www.curseforge.com/minecraft/mc-mods/jei][PlDb]
+| Curios API (Forge) | ✅ | [https://www.curseforge.com/minecraft/mc-mods/curios]
+| Just Enough Items (JEI) |❌ | [https://www.curseforge.com/minecraft/mc-mods/jei]
 
 ## Customize recipe with datapack
 
