@@ -3,11 +3,7 @@ package eu.bsuu.curiosmunchies;
 import com.mojang.logging.LogUtils;
 import eu.bsuu.curiosmunchies.init.ModItems;
 import eu.bsuu.curiosmunchies.init.ModRecipes;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -24,8 +20,6 @@ public class CuriosMunchies {
 
     public static final String MODID = "curios_munchies";
     public static final Logger LOGGER = LogUtils.getLogger();
-
-    public static final TagKey<Item> SNACK_ALLOW_TAG = ItemTags.create(new ResourceLocation(CuriosMunchies.MODID, "curios_munchies_snack"));
 
     public CuriosMunchies() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

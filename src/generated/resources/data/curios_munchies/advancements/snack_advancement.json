@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "snack": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "curios_munchies:snack_item"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancement.curiosmunchies.snack.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "curios_munchies:snack_item"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.curiosmunchies.snack.title"
+    }
+  },
+  "requirements": [
+    [
+      "snack"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

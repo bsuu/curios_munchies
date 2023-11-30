@@ -12,7 +12,4 @@ public class ModItems {
 
 
     public static final RegistryObject<Item> SNACK_ITEM = ITEMS.register("snack_item", SnackItem::new);
-//    public static final RegistryObject<Item> BEBUG_ITEM = ITEMS.register("debug_item", DebugItem::new);
-
-
 }
