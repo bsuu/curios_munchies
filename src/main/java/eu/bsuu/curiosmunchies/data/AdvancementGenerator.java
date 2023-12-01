@@ -25,7 +25,7 @@ public class AdvancementGenerator extends ForgeAdvancementProvider {
     public static class MunchiesAdvancement implements AdvancementGenerator  {
 
         @Override
-        public void generate(HolderLookup.@NotNull Provider registries, @NotNull Consumer<Advancement> saver, @NotNull ExistingFileHelper existingFileHelper) {
+        public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
             DisplayInfo advancementDisplay = new DisplayInfo(new ItemStack(ModItems.SNACK_ITEM.get()),
                     Component.translatable("advancement.curiosmunchies.snack.title"),
                     Component.translatable("advancement.curiosmunchies.snack.description"),

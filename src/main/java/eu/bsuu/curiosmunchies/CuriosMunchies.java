@@ -24,9 +24,7 @@ public class CuriosMunchies {
     public CuriosMunchies() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.ITEMS.register(modEventBus);
-        ModRecipes.SERIALIZERS.register(modEventBus);
-
-        MinecraftForge.EVENT_BUS.register(this);
+        ModRecipes.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 

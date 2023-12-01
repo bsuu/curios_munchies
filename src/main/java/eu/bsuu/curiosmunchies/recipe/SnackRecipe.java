@@ -77,17 +77,16 @@ public class SnackRecipe implements SmithingRecipe {
     public @NotNull RecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }
-    
 
-    public static class SnackRecipeSerializer implements RecipeSerializer<SnackRecipe> {
-        private final SnackRecipeSerializer.Factory<SnackRecipe> constructor;
+    public static class Serializer implements RecipeSerializer<SnackRecipe> {
+        private final Serializer.Factory<SnackRecipe> constructor;
 
         private static final Codec<SnackRecipe> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
                 Ingredient.CODEC.fieldOf("base").forGetter((recipe) -> recipe.base),
                 Ingredient.CODEC.fieldOf("addition").forGetter((recipe) -> recipe.addition)
         ).apply(instance, SnackRecipe::new));
 
-        public SnackRecipeSerializer(Factory<SnackRecipe> recipeFactory) {
+        public Serializer(Factory<SnackRecipe> recipeFactory) {
             this.constructor = recipeFactory;
         }
 

@@ -12,6 +12,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,8 +51,8 @@ public class CuriosMunchiesJEI implements IModPlugin {
 
         List<SnackRecipe> snackRecipeList = new ArrayList<>();
         recipeManager.getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).forEach(recipe -> {
-            if (recipe instanceof SnackRecipe) {
-                snackRecipeList.add((SnackRecipe) recipe);
+            if (recipe.value() instanceof SnackRecipe) {
+                snackRecipeList.add((SnackRecipe) recipe.value());
             }
         });
         registration.addRecipes(SNACK_RECIPE_TYPE, snackRecipeList);

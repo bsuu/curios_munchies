@@ -1,6 +1,7 @@
 package eu.bsuu.curiosmunchies.recipe;
 
 import com.google.gson.JsonObject;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
@@ -33,27 +34,15 @@ public class SnackRecipeBuilder {
         p_267089_.accept(new SnackRecipeBuilder.Result(p_267287_, this.type, this.base, this.addition));
     }
 
-    public static record Result(ResourceLocation id, RecipeSerializer<?> type, Ingredient base, Ingredient addition) implements FinishedRecipe {
+    public record Result(ResourceLocation id, RecipeSerializer<?> type, Ingredient base, Ingredient addition) implements FinishedRecipe {
         public void serializeRecipeData(JsonObject p_266713_) {
-            p_266713_.add("base", this.base.toJson());
-            p_266713_.add("addition", this.addition.toJson());
+            p_266713_.add("base", this.base.toJson(true));
+            p_266713_.add("addition", this.addition.toJson(true));
         }
 
-        public @NotNull ResourceLocation getId() {
-            return this.id;
-        }
-
-        public @NotNull RecipeSerializer<?> getType() {
-            return this.type;
-        }
-
+        @Override
         @Nullable
-        public JsonObject serializeAdvancement() {
-            return null;
-        }
-
-        @Nullable
-        public ResourceLocation getAdvancementId() {
+        public AdvancementHolder advancement() {
             return null;
         }
     }
